@@ -1,0 +1,15 @@
+<!--
+  NCV BUILD IDS:
+        int = bt280
+        qa = bt390
+        approval = bt443
+        stage = bt398
+        prod = bt399
+  HUBOT:
+        hubot = bt1568
+-->
+
+<build>
+    <buildType id="bt280"/>
+    <comment><text>triggered from curl</text></comment>
+</build>
