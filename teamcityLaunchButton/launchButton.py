@@ -7,6 +7,7 @@ try:
         import os
         import RPi.GPIO as GPIO
 
+        # BLINK CYCLE ENDING WITH LED OFF
         def Blink(pin):
                 GPIO.output(pin,GPIO.HIGH)
                 sleep(.1)
@@ -14,6 +15,7 @@ try:
                 sleep(.1)
                 return
 
+        # BLINK CYCLE ENDING WITH LED ON
         def AltBlink(pin):
                 for i in range(0, 20):
                         GPIO.output(pin,GPIO.LOW)
@@ -22,6 +24,7 @@ try:
                         sleep(.1)
                 return
 
+        # TRIGGER A BUILD WITH buildA.xml OR buildB.xml DEPENDING ON THE INPUT
         def runTheBuild(targetBranch):
                 # REPLACE ITEMS INSIDE SQUARE BRACKETS WITH YOUR CREDS
                 GPIO.output(blinker,GPIO.HIGH)
@@ -35,7 +38,7 @@ try:
                 sleep(5)
                 GPIO.output(blinker,GPIO.LOW)
 
-
+        # GPIO PINS FOR INTERACTIONS (BCM)
         blinker = 17
         armingSwitch = 24
         launchButton = 27
@@ -43,17 +46,21 @@ try:
         branchA_LED = 22
         branchB_LED = 25
 
+        # BUILD IDS FOR TEAMCITY
         intID = "bt280"
         qaID = "bt390"
         approvalID = "bt443"
         stageID = "bt398"
         prodID = "bt399"
 
+        # SET YOU BRANCH TARGET TO PREVIOUSLY DEFINED BUILD IDS
         branchATarget = intID
         branchBTarget = approvalID
 
+        # SET THE DEFAULT BRANCH TARGET
         targetBranch = branchATarget
 
+        # GPIO SETUP
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(launchButton, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         GPIO.setup(armingSwitch, GPIO.IN, pull_up_down=GPIO.PUD_UP)
@@ -77,8 +84,8 @@ try:
                         armed = False
                         #print("unarmed")
 
+                # BRANCH SWITCHING
                 if ( branchButtonState == 0 ):
-                        print("Branch button pressed")
                         if ( targetBranch == branchATarget ):
                                 targetBranch = branchBTarget
                                 GPIO.output(branchA_LED,GPIO.LOW)
@@ -93,6 +100,7 @@ try:
                                 print(targetBranch)
                 sleep(0.2)
 
+                # BUTTON HANDLING/DEBOUNCING
                 if ( armed == True ):
                         if ( launchButtonState == 0 ) and ( targetBranch == branchATarget ):
                                 runTheBuild(branchATarget)
