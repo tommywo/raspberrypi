@@ -63,14 +63,23 @@ try:
         # GPIO SETUP
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(launchButton, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.setup(armingSwitch, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(armingSwitch, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         GPIO.setup(blinker, GPIO.OUT)
-        GPIO.setup(branchButton, GPIO.IN)
+        GPIO.setup(branchButton, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         GPIO.setup(branchA_LED, GPIO.OUT)
         GPIO.setup(branchB_LED, GPIO.OUT)
 
         ts = time.time()
         renderedTime = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
+
+        if ( targetBranch == branchATarget ):
+                targetBranch = branchBTarget
+                GPIO.output(branchA_LED,GPIO.LOW)
+                GPIO.output(branchB_LED,GPIO.HIGH)
+        elif ( targetBranch == branchBTarget ):
+                targetBranch = branchATarget
+                GPIO.output(branchA_LED,GPIO.HIGH)
+                GPIO.output(branchB_LED,GPIO.LOW)
 
         while True:
                 launchButtonState = GPIO.input(launchButton)

@@ -12,3 +12,5 @@ The .conf file is there if you want to have this script run on boot/reboot of th
 Check out a video of the project [on YouTube](https://www.youtube.com/watch?v=wxBtHvDUVHk).
 
 Hit me up on [Twitter](https://twitter.com/justinSmithChi) with any questions or comments - I'd love to see if anyone else implements this. This is my first run at Python, so any suggestions for improving the code are more than welcome.
+
+![](/teamcityLaunchButton/image.png?raw=true "Optional Title")
